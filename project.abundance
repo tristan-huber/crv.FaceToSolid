@@ -12,6 +12,10 @@
     {
       "name": "thickness",
       "ioValue": 1
+    },
+    {
+      "name": "andFuse",
+      "ioValue": 10
     }
   ],
   "topLevel": true,
@@ -30,8 +34,8 @@
     },
     {
       "atomType": "Code",
-      "x": 0.394140625,
-      "y": 0.5568181818181818,
+      "x": 0.42617187500000003,
+      "y": 0.4448051948051948,
       "uniqueID": "id-3853",
       "ioValues": [
         {
@@ -61,6 +65,14 @@
       "y": 0.24615384615384617,
       "uniqueID": "id-3866",
       "name": "thickness"
+    },
+    {
+      "atomType": "Input",
+      "x": 0.025384615384615384,
+      "y": 0.3384615384615385,
+      "uniqueID": "id-3877",
+      "name": "andFuse",
+      "type": "boolean"
     }
   ],
   "allConnectors": [

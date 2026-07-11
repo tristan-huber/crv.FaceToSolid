@@ -8,6 +8,7 @@
 
 - **Faces** (geometry)
 - **thickness** (number)
+- **andFuse** (boolean)
 
 
 

@@ -1,13 +1,86 @@
 {
-    "atomType": "Molecule",
-    "x": 0,
-    "y": 0,
-    "uniqueID": "id-3850",
-    "name": "crv.FaceToSolid",
-    "topLevel": true,
-    "allAtoms": [],
-    "allConnectors": [],
-    "unitsKey": "Unitless",
-    "fileTypeVersion": 1,
-    "filetypeVersion": 1
+  "atomType": "Molecule",
+  "x": 0,
+  "y": 0,
+  "uniqueID": "id-3850",
+  "name": "crv.FaceToSolid",
+  "ioValues": [
+    {
+      "name": "Faces",
+      "ioValue": "__GEOMETRY_INPUT__"
+    },
+    {
+      "name": "thickness",
+      "ioValue": 10
+    }
+  ],
+  "topLevel": true,
+  "allAtoms": [
+    {
+      "atomType": "Output",
+      "x": 0.98,
+      "y": 0.5,
+      "uniqueID": "id-3851",
+      "ioValues": [
+        {
+          "name": "number or geometry",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ]
+    },
+    {
+      "atomType": "Code",
+      "x": 0.394140625,
+      "y": 0.5568181818181818,
+      "uniqueID": "id-3853",
+      "ioValues": [
+        {
+          "name": "thickness",
+          "ioValue": 10
+        },
+        {
+          "name": "faces",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ],
+      "interpreterVersion": 1,
+      "code": "function run(faces: Assembly, thickness: number = 1) {\n  const resultingLeafs: Assembly[] = []\n  faces.onLeafs((leaf) => {\n    const face = (leaf.geometry instanceof replicad.Face) ? leaf.geometry : leaf.geometry.faces[0]\n\n    const offset = replicad.makeOffset(face, thickness);\n    const w1 = replicad.assembleWire(face.edges);\n    const w2 = replicad.assembleWire(offset.edges);\n    const boundary = replicad.loft([w2, w1], {}, true);\n    const solid = replicad.makeSolid([face, offset, boundary]).simplify();\n\n    resultingLeafs.push(new Assembly({\n      ...leaf,\n      geometry: solid\n    }))\n    return leaf;\n  })\n  return resultingLeafs;\n}",
+      "compiledCode": "\"use strict\";\nfunction run(faces, thickness = 1) {\n    const resultingLeafs = [];\n    faces.onLeafs((leaf) => {\n        const face = (leaf.geometry instanceof replicad.Face) ? leaf.geometry : leaf.geometry.faces[0];\n        const offset = replicad.makeOffset(face, thickness);\n        const w1 = replicad.assembleWire(face.edges);\n        const w2 = replicad.assembleWire(offset.edges);\n        const boundary = replicad.loft([w2, w1], {}, true);\n        const solid = replicad.makeSolid([face, offset, boundary]).simplify();\n        resultingLeafs.push(new Assembly({\n            ...leaf,\n            geometry: solid\n        }));\n        return leaf;\n    });\n    return resultingLeafs;\n}\n"
+    },
+    {
+      "atomType": "Input",
+      "x": 0.025384615384615384,
+      "y": 0.15384615384615385,
+      "uniqueID": "id-3862",
+      "name": "Faces",
+      "type": "geometry"
+    },
+    {
+      "atomType": "Input",
+      "x": 0.025384615384615384,
+      "y": 0.39610389610389607,
+      "uniqueID": "id-3866",
+      "name": "thickness"
+    }
+  ],
+  "allConnectors": [
+    {
+      "ap2Name": "number or geometry",
+      "ap1ID": "id-3853",
+      "ap2ID": "id-3851"
+    },
+    {
+      "ap2Name": "faces",
+      "ap1ID": "id-3862",
+      "ap2ID": "id-3853"
+    },
+    {
+      "ap2Name": "thickness",
+      "ap1ID": "id-3866",
+      "ap2ID": "id-3853"
+    }
+  ],
+  "unitsKey": "Unitless",
+  "fileTypeVersion": 1,
+  "filetypeVersion": 1
 }

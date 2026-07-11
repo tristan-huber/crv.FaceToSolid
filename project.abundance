@@ -15,7 +15,7 @@
     },
     {
       "name": "andFuse",
-      "ioValue": 10
+      "ioValue": false
     }
   ],
   "topLevel": true,
@@ -48,7 +48,7 @@
         },
         {
           "name": "fuse",
-          "ioValue": 10
+          "ioValue": false
         }
       ],
       "interpreterVersion": 1,

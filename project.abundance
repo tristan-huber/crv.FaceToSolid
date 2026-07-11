@@ -11,7 +11,8 @@
     },
     {
       "name": "thickness",
-      "ioValue": 10
+      "ioValue": 1,
+      "currentEquation": "1"
     }
   ],
   "topLevel": true,
@@ -36,7 +37,7 @@
       "ioValues": [
         {
           "name": "thickness",
-          "ioValue": 10
+          "ioValue": 1
         },
         {
           "name": "faces",
@@ -44,8 +45,8 @@
         }
       ],
       "interpreterVersion": 1,
-      "code": "function run(faces: Assembly, thickness: number = 1) {\n  const resultingLeafs: Assembly[] = []\n  faces.onLeafs((leaf) => {\n    const face = (leaf.geometry instanceof replicad.Face) ? leaf.geometry : leaf.geometry.faces[0]\n\n    const offset = replicad.makeOffset(face, thickness);\n    const w1 = replicad.assembleWire(face.edges);\n    const w2 = replicad.assembleWire(offset.edges);\n    const boundary = replicad.loft([w2, w1], {}, true);\n    const solid = replicad.makeSolid([face, offset, boundary]).simplify();\n\n    resultingLeafs.push(new Assembly({\n      ...leaf,\n      geometry: solid\n    }))\n    return leaf;\n  })\n  return resultingLeafs;\n}",
-      "compiledCode": "\"use strict\";\nfunction run(faces, thickness = 1) {\n    const resultingLeafs = [];\n    faces.onLeafs((leaf) => {\n        const face = (leaf.geometry instanceof replicad.Face) ? leaf.geometry : leaf.geometry.faces[0];\n        const offset = replicad.makeOffset(face, thickness);\n        const w1 = replicad.assembleWire(face.edges);\n        const w2 = replicad.assembleWire(offset.edges);\n        const boundary = replicad.loft([w2, w1], {}, true);\n        const solid = replicad.makeSolid([face, offset, boundary]).simplify();\n        resultingLeafs.push(new Assembly({\n            ...leaf,\n            geometry: solid\n        }));\n        return leaf;\n    });\n    return resultingLeafs;\n}\n"
+      "code": "function run(faces: Assembly, thickness: number = 1) {\n  const resultingLeafs: Assembly[] = []\n  faces.onLeafs((leaf) => {\n    const faces = (leaf.geometry instanceof replicad.Face) ? [leaf.geometry] : leaf.geometry.faces\n\n    const offset = replicad.makeOffset(face, thickness);\n    const w1 = replicad.assembleWire(face.edges);\n    const w2 = replicad.assembleWire(offset.edges);\n    const boundary = replicad.loft([w2, w1], {}, true);\n    const solid = replicad.makeSolid([face, offset, boundary]).simplify();\n\n    resultingLeafs.push(new Assembly({\n      ...leaf,\n      geometry: solid\n    }))\n    return leaf;\n  })\n  return resultingLeafs;\n}",
+      "compiledCode": "\"use strict\";\nfunction run(faces, thickness = 1) {\n    const resultingLeafs = [];\n    faces.onLeafs((leaf) => {\n        const faces = (leaf.geometry instanceof replicad.Face) ? [leaf.geometry] : leaf.geometry.faces;\n        const offset = replicad.makeOffset(face, thickness);\n        const w1 = replicad.assembleWire(face.edges);\n        const w2 = replicad.assembleWire(offset.edges);\n        const boundary = replicad.loft([w2, w1], {}, true);\n        const solid = replicad.makeSolid([face, offset, boundary]).simplify();\n        resultingLeafs.push(new Assembly({\n            ...leaf,\n            geometry: solid\n        }));\n        return leaf;\n    });\n    return resultingLeafs;\n}\n"
     },
     {
       "atomType": "Input",
